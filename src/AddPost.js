@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { firestore } from "../Firebase";
+
 class AddPost extends Component {
   constructor() {
     super();
@@ -31,7 +33,7 @@ class AddPost extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const { onCreate } = this.props;
+    // const { onCreate } = this.props;
     const { title, general } = this.state;
 
     const post = {
@@ -39,7 +41,7 @@ class AddPost extends Component {
       general
     };
 
-    onCreate(post);
+    firestore.collection("audit").add(post);
 
     this.setState({
       title: ""

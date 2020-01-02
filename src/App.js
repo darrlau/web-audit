@@ -90,8 +90,8 @@ export default class App extends React.Component {
           <Audit></Audit>
           <ListItems
             posts={posts}
-            onCreate={this.handleCreate}
-            onRemove={this.handleRemove}
+            // onCreate={this.handleCreate}
+            // onRemove={this.handleRemove}
           ></ListItems>
         </div>
       </div>
