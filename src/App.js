@@ -17,7 +17,7 @@ export default class App extends React.Component {
   unsubscribe = null;
 
   componentDidMount = async () => {
-    // Old Way Before Unsubscribe/Subscribe
+    // // Old Way Before Unsubscribe/Subscribe
     // const snapshot = await firestore.collection("audit").get();
 
     // const posts = snapshot.docs.map(doc => {
@@ -67,7 +67,7 @@ export default class App extends React.Component {
   };
 
   handleRemove = async id => {
-    // Old Way Before Unsubscribe/Subscribe
+    // // Old Way Before Unsubscribe/Subscribe
     // const allPosts = this.state.posts;
 
     // await firestore.doc(`audit/${id}`).delete();
