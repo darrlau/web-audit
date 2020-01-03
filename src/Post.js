@@ -5,7 +5,6 @@ import { firestore } from "../Firebase";
 const Post = ({ title, id }) => {
   const remove = () => {
     firestore.doc(`audit/${id}`).delete();
-    console.log("worked");
   };
 
   return (

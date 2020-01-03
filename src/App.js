@@ -43,40 +43,40 @@ export default class App extends React.Component {
     this.unsubscribe();
   };
 
-  handleCreate = async post => {
-    // Old Way Before Unsubscribe/Subscribe
-    // const { posts } = this.state;
+  // handleCreate = async post => {
+  //   // Old Way Before Unsubscribe/Subscribe
+  //   // const { posts } = this.state;
 
-    // // This gets the document Reference
-    // // Async POST ... leading to AWAIT
-    // const docRef = await firestore.collection("audit").add(post);
+  //   // // This gets the document Reference
+  //   // // Async POST ... leading to AWAIT
+  //   // const docRef = await firestore.collection("audit").add(post);
 
-    // // Returns the document snapshot
-    // // Also Async POST ... leading to AWAIT
-    // const doc = await docRef.get();
-    // console.log(docRef, "this is the docRef");
+  //   // // Returns the document snapshot
+  //   // // Also Async POST ... leading to AWAIT
+  //   // const doc = await docRef.get();
+  //   // console.log(docRef, "this is the docRef");
 
-    // const newPost = doc => {
-    //   return { id: doc.id, ...doc.data() };
-    // };
+  //   // const newPost = doc => {
+  //   //   return { id: doc.id, ...doc.data() };
+  //   // };
 
-    // this.setState({
-    //   posts: [newPost, ...posts]
-    // });
-    firestore.collection("audit").add(post);
-  };
+  //   // this.setState({
+  //   //   posts: [newPost, ...posts]
+  //   // });
+  //   firestore.collection("audit").add(post);
+  // };
 
-  handleRemove = async id => {
-    // // Old Way Before Unsubscribe/Subscribe
-    // const allPosts = this.state.posts;
+  // handleRemove = async id => {
+  //   // // Old Way Before Unsubscribe/Subscribe
+  //   // const allPosts = this.state.posts;
 
-    // await firestore.doc(`audit/${id}`).delete();
+  //   // await firestore.doc(`audit/${id}`).delete();
 
-    // const posts = allPosts.filter(post => post.id !== id);
-    // this.setState({ posts });
+  //   // const posts = allPosts.filter(post => post.id !== id);
+  //   // this.setState({ posts });
 
-    firestore.doc(`audit/${id}`).delete();
-  };
+  //   firestore.doc(`audit/${id}`).delete();
+  // };
 
   render() {
     const { posts } = this.state;
