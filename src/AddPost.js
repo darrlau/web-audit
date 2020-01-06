@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 
-import { firestore } from "../Firebase";
+import { firestore, auth } from "../Firebase";
 
 class AddPost extends Component {
   constructor() {
     super();
     this.state = {
       title: "",
+      createdAt: new Date(),
       general: [
         {
           pH: 0,
@@ -35,10 +36,17 @@ class AddPost extends Component {
 
     // const { onCreate } = this.props;
     const { title, general } = this.state;
+    const { uid, displayName, email, photoURL } = auth.currentUser || {};
 
     const post = {
       title,
-      general
+      general,
+      user: {
+        uid,
+        displayName,
+        email,
+        photoURL
+      }
     };
 
     firestore.collection("audit").add(post);

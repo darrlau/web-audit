@@ -1,5 +1,7 @@
 import React from "react";
 
+import { signOutAuth } from "../Firebase";
+
 const CurrentUser = ({ displayName, photoURL, email, children }) => {
   return (
     <section className="CurrentUser">
@@ -12,7 +14,7 @@ const CurrentUser = ({ displayName, photoURL, email, children }) => {
       </div>
       <div>
         <div>{children}</div>
-        <button>Sign Out</button>
+        <button onClick={signOutAuth}>Sign Out</button>
       </div>
     </section>
   );

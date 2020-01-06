@@ -3,18 +3,21 @@ import ReactDOM from "react-dom";
 import "./styles.less";
 import Audit from "./Audit";
 import ListItems from "./ListItems";
-import { firestore } from "../Firebase";
+import { firestore, auth } from "../Firebase";
 import "regenerator-runtime/runtime";
+import Authentication from "./Authentication";
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      posts: []
+      posts: [],
+      user: null
     };
   }
 
-  unsubscribe = null;
+  unsubscribeFromFirestore = null;
+  unsubscribeFromAuth = null;
 
   componentDidMount = async () => {
     // // Old Way Before Unsubscribe/Subscribe
@@ -31,16 +34,24 @@ export default class App extends React.Component {
     // });
 
     // This is the new subscribe/unsubscribe
-    this.unsubscribe = firestore.collection("audit").onSnapshot(snapshot => {
-      const posts = snapshot.docs.map(doc => {
-        return { id: doc.id, ...doc.data() };
+    this.unsubscribeFromFirestore = firestore
+      .collection("audit")
+      .onSnapshot(snapshot => {
+        const posts = snapshot.docs.map(doc => {
+          return { id: doc.id, ...doc.data() };
+        });
+        this.setState({ posts });
       });
-      this.setState({ posts });
+
+    // Returns a promise with the user object (OR NULL)
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+      console.log(user, "this is user from unsubscribe");
+      this.setState({ user });
     });
   };
 
   componentWillUnmount = () => {
-    this.unsubscribe();
+    this.unsubscribeFromFirestore();
   };
 
   // handleCreate = async post => {
@@ -79,7 +90,7 @@ export default class App extends React.Component {
   // };
 
   render() {
-    const { posts } = this.state;
+    const { posts, user } = this.state;
 
     return (
       <div className="main-body">
@@ -88,6 +99,7 @@ export default class App extends React.Component {
         </div>
         <div className="audit-body">
           <Audit></Audit>
+          <Authentication user={user} />
           <ListItems
             posts={posts}
             // onCreate={this.handleCreate}
