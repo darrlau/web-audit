@@ -7,7 +7,6 @@ class AddPost extends Component {
     super();
     this.state = {
       title: "",
-      createdAt: new Date(),
       general: [
         {
           pH: 0,
