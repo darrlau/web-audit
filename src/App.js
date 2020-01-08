@@ -1,13 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "./styles.less";
 import Audit from "./Audit";
 import ListItems from "./ListItems";
-import { firestore, auth } from "../Firebase";
+import { firestore, auth, createUserProfileDocument } from "../Firebase";
 import "regenerator-runtime/runtime";
 import Authentication from "./Authentication";
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -44,7 +43,8 @@ export default class App extends React.Component {
       });
 
     // Returns a promise with the user object (OR NULL)
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      const user = await createUserProfileDocument(userAuth);
       console.log(user, "this is user from unsubscribe");
       this.setState({ user });
     });
@@ -111,4 +111,4 @@ export default class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+export default App;
