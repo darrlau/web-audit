@@ -1,37 +1,32 @@
 import React, { Component, createContext } from "react";
-import { firestore } from "../Firebase";
+import { auth, createUserProfileDocument } from "../Firebase";
 
-export const UserContext = createContext();
+export const UserContext = createContext({ user: null });
 
 class UserProvider extends Component {
   state = {
-    posts: []
+    user: null
   };
 
-  unsubscribeFromFirestore = null;
+  unsubscribeFromAuth = null;
 
   componentDidMount = () => {
-    this.unsubscribeFromFirestore = firestore
-      .collection("audit")
-      .onSnapshot(snapshot => {
-        const posts = snapshot.docs.map(doc => {
-          return { id: doc.id, ...doc.data() };
-        });
-        this.setState({ posts });
-      });
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      const user = await createUserProfileDocument(userAuth);
+      console.log(user, "this is user from unsubscribe");
+      this.setState({ user });
+    });
   };
 
   componentWillUnmount = () => {
-    this.unsubscribeFromFirestore();
+    this.unsubscribeFromAuth();
   };
 
   render() {
-    const { posts } = this.state;
+    const { user } = this.state;
     const { children } = this.props;
 
-    return (
-      <UserContext.Provider value={posts}>{children}</UserContext.Provider>
-    );
+    return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
   }
 }
 

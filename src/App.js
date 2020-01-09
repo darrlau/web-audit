@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.less";
 import Audit from "./Audit";
 import ListItems from "./ListItems";
-import { auth, createUserProfileDocument } from "../Firebase";
+// import { auth, createUserProfileDocument } from "../Firebase";
 import "regenerator-runtime/runtime";
 import Authentication from "./Authentication";
 
@@ -11,28 +11,24 @@ class App extends React.Component {
     super();
     this.state = {
       // posts: [],
-      user: null
+      // user: null
     };
   }
 
   // // Refactored and now inside the provider
   // unsubscribeFromFirestore = null;
-  unsubscribeFromAuth = null;
+  // unsubscribeFromAuth = null;
 
   componentDidMount = async () => {
     // // Old Way Before Unsubscribe/Subscribe
     // const snapshot = await firestore.collection("audit").get();
-
     // const posts = snapshot.docs.map(doc => {
     //   return { id: doc.id, ...doc.data() };
     // });
-
     // console.log(posts, "here are all the documents");
-
     // this.setState({
     //   posts: posts
     // });
-
     // // This is the new subscribe/unsubscribe
     // // Refactored and now inside the provider
     // this.unsubscribeFromFirestore = firestore
@@ -43,17 +39,18 @@ class App extends React.Component {
     //     });
     //     this.setState({ posts });
     //   });
-
     // Returns a promise with the user object (OR NULL)
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      const user = await createUserProfileDocument(userAuth);
-      console.log(user, "this is user from unsubscribe");
-      this.setState({ user });
-    });
+    // // Refactored and now inside the provider
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+    //   const user = await createUserProfileDocument(userAuth);
+    //   console.log(user, "this is user from unsubscribe");
+    //   this.setState({ user });
+    // });
   };
 
   componentWillUnmount = () => {
-    this.unsubscribeFromAuth();
+    // this.unsubscribeFromFirestore();
+    // this.unsubscribeFromAuth();
   };
 
   // handleCreate = async post => {
@@ -92,8 +89,6 @@ class App extends React.Component {
   // };
 
   render() {
-    const { user } = this.state;
-
     return (
       <div className="main-body">
         <div className="top-header">
@@ -101,7 +96,7 @@ class App extends React.Component {
         </div>
         <div className="audit-body">
           <Audit></Audit>
-          <Authentication user={user} />
+          <Authentication />
           <ListItems
           // posts={posts}
           // onCreate={this.handleCreate}
