@@ -5,6 +5,9 @@ import ListItems from "./ListItems";
 // import { auth, createUserProfileDocument } from "../Firebase";
 import "regenerator-runtime/runtime";
 import Authentication from "./Authentication";
+import UserProfile from "./UserProfile";
+
+import { Switch, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
   constructor() {
@@ -92,16 +95,17 @@ class App extends React.Component {
     return (
       <div className="main-body">
         <div className="top-header">
-          <h1 className="top-logo">BPS Audit</h1>
+          <Link to="/">
+            <h1 className="top-logo">BPS Audit</h1>
+          </Link>
         </div>
         <div className="audit-body">
           <Audit></Audit>
           <Authentication />
-          <ListItems
-          // posts={posts}
-          // onCreate={this.handleCreate}
-          // onRemove={this.handleRemove}
-          ></ListItems>
+          <Switch>
+            <Route exact path="/" component={ListItems} />
+            <Route exact path="/profile" component={UserProfile} />
+          </Switch>
         </div>
       </div>
     );

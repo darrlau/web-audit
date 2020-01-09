@@ -2,13 +2,17 @@ import React from "react";
 
 import { signOutAuth } from "../Firebase";
 
+import { Link } from "react-router-dom";
+
 const CurrentUser = ({ displayName, photoURL, email, children }) => {
   return (
     <section className="CurrentUser">
       <div className="CurrentUser--profile">
         {photoURL && <img src={photoURL} alt={displayName} />}
         <div className="CurrentUser--information">
-          <h2>{displayName}</h2>
+          <Link to="profile">
+            <h2>{displayName}</h2>
+          </Link>
           <p className="email">{email}</p>
         </div>
       </div>

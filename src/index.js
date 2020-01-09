@@ -5,12 +5,16 @@ import App from "./App";
 import PostsProvider from "../providers/PostsProvider";
 import UserProvider from "../providers/UserProvider";
 
+import { BrowserRouter as Router } from "react-router-dom";
+
 ReactDOM.render(
-  <UserProvider>
-    <PostsProvider>
-      <App />
-    </PostsProvider>
-  </UserProvider>,
+  <Router>
+    <UserProvider>
+      <PostsProvider>
+        <App />
+      </PostsProvider>
+    </UserProvider>
+  </Router>,
 
   document.getElementById("root")
 );

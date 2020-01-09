@@ -3,12 +3,12 @@ import Post from "./Post";
 import AddPost from "./AddPost";
 import { PostsContext } from "../providers/PostsProvider";
 
-const ListItems = ({ onCreate }) => {
+const ListItems = () => {
   const posts = useContext(PostsContext);
 
   return (
     <div className="posts-map">
-      <AddPost onCreate={onCreate} />
+      <AddPost />
       {posts.map(post => (
         <Post {...post} key={post.id} />
       ))}
