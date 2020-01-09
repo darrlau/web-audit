@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "regenerator-runtime/runtime";
+import "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7h97dbuPCzMtARABZEOyMtzTl-0v2JYI",
@@ -18,6 +19,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const firestore = firebase.firestore();
+export const storage = firebase.storage();
 
 window.firebase = firebase;
 
@@ -32,7 +34,7 @@ export const createUserProfileDocument = async (user, additionalData) => {
   // go and return the document from that location
   const snapshot = await userRef.get();
 
-  // if it doesn't exist
+  // if it doesn't exist, create it!
   if (!snapshot.exists) {
     const { displayName, email, photoURL } = user;
     const createdAt = new Date();
@@ -49,6 +51,7 @@ export const createUserProfileDocument = async (user, additionalData) => {
     }
   }
 
+  // now go GET that USER document
   return getUserDocument(user.uid);
 };
 
@@ -56,14 +59,7 @@ export const getUserDocument = async uid => {
   if (!uid) return null;
 
   try {
-    const userDocument = await firestore
-      .collection("users")
-      .doc(uid)
-      .get();
-    return {
-      uid,
-      ...userDocument.data()
-    };
+    return firestore.collection("users").doc(uid);
   } catch (error) {
     console.log(error, "our error getting it!");
   }
