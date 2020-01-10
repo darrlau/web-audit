@@ -17,6 +17,9 @@ export default class AddFactor extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
+    this.props.onCreate(this.state);
+
     this.setState({
       content: ""
     });

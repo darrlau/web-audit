@@ -16,7 +16,7 @@ export default class Factors extends Component {
     return (
       <section>
         <div className="individual">
-          <AddFactor />
+          <AddFactor onCreate={this.props.onCreate} />
           {this.props.comments.map(comment => (
             <Comment {...comment} key={comment.id} />
           ))}

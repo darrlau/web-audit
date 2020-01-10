@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 
 import Post from "./Post";
-import Comments from "./Comments";
 import { firestore } from "../Firebase";
 
 import { collectIdsAndDocs } from "./utilities";
 
-import { withRouter, Link, Redirect } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import Factors from "./Factors";
 
 class PostPage extends Component {
@@ -40,17 +39,19 @@ class PostPage extends Component {
       });
     });
 
-    this.unsubscribeFromComments = this.commentsRef.onSnapshot(snapshot => {
-      const comments = snapshot.docs.map(collectIdsAndDocs);
-      this.setState({
-        comments
-      });
-    });
+    // this.unsubscribeFromComments = this.commentsRef.onSnapshot(snapshot => {
+    //   const comments = snapshot.docs.map(collectIdsAndDocs);
+    //   this.setState({
+    //     comments
+    //   });
+    // });
   };
 
-  createComment = addedComment => {
-    console.log(addedComment);
-    return true;
+  createComment = comment => {
+    console.log(comment, "the comment");
+    this.commentsRef.add({
+      ...comment
+    });
   };
 
   componentWillUnmount = () => {
@@ -61,8 +62,7 @@ class PostPage extends Component {
   render() {
     // const { match } = this.props;
     const { post, comments } = this.state;
-    console.log(this.props, "props inside postpage");
-    console.log(this.state, "state inside postpage");
+
     return (
       <div>
         {post && <Post {...post} />}
