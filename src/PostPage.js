@@ -6,12 +6,14 @@ import { firestore } from "../Firebase";
 
 import { collectIdsAndDocs } from "./utilities";
 
-import { withRouter } from "react-router-dom";
+import { withRouter, Link, Redirect } from "react-router-dom";
+import Factors from "./Factors";
 
 class PostPage extends Component {
   state = {
     post: null,
-    comments: []
+    comments: [],
+    loaded: false
   };
 
   get postId() {
@@ -33,7 +35,8 @@ class PostPage extends Component {
     this.unsubscribeFromPost = this.postRef.onSnapshot(snapshot => {
       const post = collectIdsAndDocs(snapshot);
       this.setState({
-        post
+        post,
+        loaded: true
       });
     });
 
@@ -43,6 +46,11 @@ class PostPage extends Component {
         comments
       });
     });
+  };
+
+  createComment = addedComment => {
+    console.log(addedComment);
+    return true;
   };
 
   componentWillUnmount = () => {
@@ -56,10 +64,13 @@ class PostPage extends Component {
     console.log(this.props, "props inside postpage");
     console.log(this.state, "state inside postpage");
     return (
-      <section>
+      <div>
         {post && <Post {...post} />}
-        <Comments comments={comments} onCreate={() => {}} />
-      </section>
+        <Factors comments={comments} onCreate={this.createComment} />
+        <footer>
+          <Link to="/">&larr; Back</Link>
+        </footer>
+      </div>
     );
   }
 }
